@@ -2,6 +2,10 @@
 
 The Game of Nim is a mathematical strategy game where two players take turns removing objects from heaps or piles. The goal is to be the player who takes the last object. Although it may appear complex at first, Nim has a simple yet beautiful winning strategy based on binary arithmetic and the concept of the "Nim-sum."
 
+Historical Context
+
+The Game of Nim has ancient roots, but its mathematical foundations were established in 1901 by Charles L. Bouton, who introduced the Nim-sum and a complete winning strategy. Nim became a cornerstone of combinatorial game theory and even inspired early computer games, like the 1951 Nimrod computer. Today, it remains a classic example of strategic thinking and binary arithmetic.
+
 ![Nim](Nim_1.png)
 ![Nim](Nim_2.png)
 
