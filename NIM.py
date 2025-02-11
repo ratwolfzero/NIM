@@ -12,7 +12,7 @@ heaps = [1, 3, 5, 7]
 
 # Function to compute Nim-sum and return binary representations
 def nim_sum_with_binary(heaps):
-    max_bits = max(heaps).bit_length() if heaps else 1
+    max_bits = max(4, max(heaps).bit_length())  # Ensure at least 4-bit representation
     binary_heaps = [bin(h)[2:].zfill(max_bits) for h in heaps]
     nim_val = np.bitwise_xor.reduce(heaps)
     binary_nim_val = bin(nim_val)[2:].zfill(max_bits)
