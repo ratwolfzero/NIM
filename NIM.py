@@ -71,7 +71,7 @@ class NimGame:
         column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]
 
         # Display XOR equation above the table
-        self.ax_info.text(0.5, 1.05, f"XOR Equation: {xor_equation}",
+        self.ax_info.text(0.5, 1.05, f"Nim-Sum: Bitwise XOR of All Heap Sizes: {xor_equation}",
                           fontsize=12, ha="center", weight="normal", family="monospace")
 
         # Display Nim-Sum below XOR equation
