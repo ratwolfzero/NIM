@@ -74,7 +74,7 @@ def plot_nim(heaps):
 
     # Display XOR equation above table
     ax_info.text(0.5, 1.05, f"Nim-Sum Calculation XOR all Heaps: {xor_equation}",
-                 fontsize=12, ha="center", weight="bold", family="monospace")
+                 fontsize=12, ha="center", weight="normal", family="monospace")
 
     # Display Nim-Sum below XOR equation
     ax_info.text(0.5, 1.0, f"Nim-Sum: {nim_val} (Binary: {binary_nim_val})",
