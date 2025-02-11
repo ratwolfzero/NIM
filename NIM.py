@@ -70,7 +70,7 @@ def plot_nim(heaps):
     ax_info.axis("off")
 
     table_data = generate_table_data(heaps, nim_val, binary_heaps, binary_nim_val)
-    column_labels = ["Heap#", "Dec", "Bin", "⊕", "Nim-Sum", "=", "Bin'", "Dec'", "Safe Move?"]
+    column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]  # Empty strings for ⊕ and =
 
     # Display XOR equation above table
     ax_info.text(0.5, 1.05, f"Nim-Sum Calculation XOR all Heaps: {xor_equation}",
