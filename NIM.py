@@ -16,7 +16,11 @@ def nim_sum_with_binary(heaps):
     binary_heaps = [bin(h)[2:].zfill(max_bits) for h in heaps]
     nim_val = np.bitwise_xor.reduce(heaps)
     binary_nim_val = bin(nim_val)[2:].zfill(max_bits)
-    return nim_val, binary_heaps, binary_nim_val
+    
+    # Create XOR equation string
+    xor_equation = " ⊕ ".join(binary_heaps) + f" = {binary_nim_val}"
+    
+    return nim_val, binary_heaps, binary_nim_val, xor_equation
 
 # Setup axes properties
 def setup_axes(ax, num_heaps, max_height):
@@ -50,7 +54,7 @@ ax_info.axis("off")
 
 def plot_nim(heaps):
     setup_axes(ax, len(heaps), 10)
-    nim_val, binary_heaps, binary_nim_val = nim_sum_with_binary(heaps)
+    nim_val, binary_heaps, binary_nim_val, xor_equation = nim_sum_with_binary(heaps)
 
     # Title
     ax.set_title(f"Nim-Sum: {nim_val} ({binary_nim_val}) ({'Safe' if nim_val == 0 else 'Unsafe'})",
@@ -64,11 +68,15 @@ def plot_nim(heaps):
     # Update table in second window
     ax_info.clear()
     ax_info.axis("off")
-    
+
     table_data = generate_table_data(heaps, nim_val, binary_heaps, binary_nim_val)
     column_labels = ["Heap#", "Dec", "Bin", "⊕ Nim-Sum", "Bin", "Dec", "Safe Move?"]
 
-    # Display title above table
+    # Display XOR equation above table
+    ax_info.text(0.5, 1.05, f"XOR Calculation: {xor_equation}",
+                 fontsize=12, ha="center", weight="bold", family="monospace")
+
+    # Display Nim-Sum below XOR equation
     ax_info.text(0.5, 1.0, f"Nim-Sum: {nim_val} (Binary: {binary_nim_val})",
                  fontsize=12, ha="center", weight="bold")
 
@@ -85,6 +93,7 @@ def plot_nim(heaps):
 
     fig.canvas.draw_idle()
     fig_info.canvas.draw_idle()
+
 
 # Callback for sliders
 def update(val):
