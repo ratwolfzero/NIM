@@ -73,7 +73,7 @@ def plot_nim(heaps):
     column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]  # Empty strings for ⊕ and =
 
     # Display XOR equation above table
-    ax_info.text(0.5, 1.05, f"Nim-Sum Calculation XOR all Heaps: {xor_equation}",
+    ax_info.text(0.5, 1.05, f"Nim-Sum: Bitwise XOR of All Heap Sizes: {xor_equation}",
                  fontsize=12, ha="center", weight="normal", family="monospace")
 
     # Display Nim-Sum below XOR equation
