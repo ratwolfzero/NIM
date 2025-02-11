@@ -41,7 +41,7 @@ def generate_table_data(heaps, nim_val, binary_heaps, binary_nim_val):
         binary_new_h = bin(new_h)[2:].zfill(len(binary_nim_val))
         safe_move_possible = "YES" if new_h < h else "NO"
         table_data.append([
-            f"Heap {i+1}", h, binary_heaps[i], binary_nim_val, binary_new_h, new_h, safe_move_possible
+            f"Heap {i+1}", h, binary_heaps[i], "⊕", binary_nim_val, "=", binary_new_h, new_h, safe_move_possible
         ])
     return table_data
 
@@ -70,7 +70,7 @@ def plot_nim(heaps):
     ax_info.axis("off")
 
     table_data = generate_table_data(heaps, nim_val, binary_heaps, binary_nim_val)
-    column_labels = ["Heap#", "Dec", "Bin", "⊕ Nim-Sum", "= Bin'", "Dec'", "Safe Move?"]
+    column_labels = ["Heap#", "Dec", "Bin", "⊕", "Nim-Sum", "=", "Bin'", "Dec'", "Safe Move?"]
 
     # Display XOR equation above table
     ax_info.text(0.5, 1.05, f"Nim-Sum Calculation XOR all Heaps: {xor_equation}",
@@ -85,15 +85,20 @@ def plot_nim(heaps):
     table.auto_set_font_size(False)
     table.set_fontsize(10)
 
+    # Adjust column widths
+    col_widths = [0.1, 0.1, 0.15, 0.05, 0.15, 0.05, 0.15, 0.1, 0.15]  # Adjusted widths
+    for i, width in enumerate(col_widths):
+        table.auto_set_column_width(i)  # Auto-set width for each column
+        table.get_celld()[(0, i)].set_width(width)  # Manually set width for header cells
+
     # Change cell colors for "Safe Move?"
     for (row, col), cell in table.get_celld().items():
-        if col == 6 and row > 0:
+        if col == 8 and row > 0:
             cell.set_facecolor(SAFE_COLOR if table_data[row-1][col] == "YES" else UNSAFE_COLOR)
             cell.get_text().set_weight("bold")
 
     fig.canvas.draw_idle()
     fig_info.canvas.draw_idle()
-
 
 # Callback for sliders
 def update(val):
