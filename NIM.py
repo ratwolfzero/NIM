@@ -107,7 +107,7 @@ class NimGame:
             #cell.set_facecolor(UNSAFE_COLOR if table_data[row][1] != 0 else SAFE_COLOR)
 
         # Display XOR equation below the table
-        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR of All Heap Sizes: {xor_equation}",
+        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR (⊕) of All Heap Sizes: {xor_equation}",
                           fontsize=10, ha="center", weight="normal", family="monospace")
 
     def plot_nim(self):
