@@ -108,8 +108,13 @@ class NimGame:
             cell.get_text().set_weight("bold")
 
         # Display XOR equation below the table
-        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR (⊕) of All Heap Sizes: {xor_equation}",
+        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR of All Heap Sizes: {xor_equation}",
                           fontsize=10, ha="center", weight="normal", family="monospace")
+        
+        # Explanation of XOR (⊕) symbol
+        self.ax_info.text(0.5, 0.35, "Note: ⊕ represents the bitwise XOR operation, which compares binary digits \n"
+                             "and returns 1 if they are different and 0 if they are the same.",
+                  fontsize=9, ha="center", weight="normal", family="monospace")
 
     def plot_nim(self):
         """Update the entire UI."""
