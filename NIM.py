@@ -25,7 +25,7 @@ class NimGame:
         self.create_sliders()
 
     def nim_sum_with_binary(self):
-        """Compute Nim-sum and return binary representations."""
+        """Compute the nim-sum and return its binary representation."""
         max_bits = max(4, max(self.heaps).bit_length())  # Ensure at least 4-bit representation
         binary_heaps = [bin(h)[2:].zfill(max_bits) for h in self.heaps]
         nim_val = np.bitwise_xor.reduce(self.heaps)
@@ -42,18 +42,23 @@ class NimGame:
         self.ax.set_xticklabels([f"Heap {i+1}" for i in range(len(self.heaps))])
         self.ax.set_yticks([])
         self.ax.set_facecolor('#F5F5F5')
-        self.ax.set_aspect('equal')
+        self.ax.set_aspect('auto')
 
     def generate_table_data(self, nim_val, binary_heaps, binary_nim_val):
         """Generate data for the table."""
-        table_data = []
-        for i, h in enumerate(self.heaps):
-            new_h = h ^ nim_val
-            binary_new_h = bin(new_h)[2:].zfill(len(binary_nim_val))
-            safe_move_possible = "YES" if new_h < h else "NO"
-            table_data.append([
-                f"Heap {i+1}", h, binary_heaps[i], "⊕", binary_nim_val, "=", binary_new_h, new_h, safe_move_possible
-            ])
+        table_data = [
+            [
+                f"Heap {i+1}", 
+                h, 
+                binary_heaps[i], 
+                "⊕", 
+                binary_nim_val, 
+                "=", 
+                bin(h ^ nim_val)[2:].zfill(len(binary_nim_val)), 
+                h ^ nim_val, 
+                "YES" if (h ^ nim_val) < h else "NO"
+            ] for i, h in enumerate(self.heaps)
+        ]
         
         # Add the Nim-sum row at the bottom
         table_data.append([
@@ -94,17 +99,13 @@ class NimGame:
 
         # Change cell colors for "Safe Move?" (only for heap rows)
         for row in range(1, len(table_data)):  # Iterate over all rows except the Nim-sum row
-            if row < len(table_data):  # Ensure we don't go out of bounds
-                cell = table.get_celld()[(row, 8)]
-                cell.set_facecolor(SAFE_COLOR if table_data[row-1][8] == "YES" else UNSAFE_COLOR)
-                cell.get_text().set_weight("normal")  # Ensure heap rows are not bold
+            cell = table.get_celld()[(row, 8)]
+            cell.set_facecolor(SAFE_COLOR if table_data[row-1][8] == "YES" else UNSAFE_COLOR)
 
         # Make the Nim-sum row bold
         for col in range(len(column_labels)):
             cell = table.get_celld()[(len(table_data), col)]
             cell.get_text().set_weight("bold")
-            #cell = table.get_celld()[(row+1, 0)]
-            #cell.set_facecolor(UNSAFE_COLOR if table_data[row][1] != 0 else SAFE_COLOR)
 
         # Display XOR equation below the table
         self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR (⊕) of All Heap Sizes: {xor_equation}",
@@ -140,4 +141,3 @@ class NimGame:
 # Initialize and run the Nim game
 nim_game = NimGame(INITIAL_HEAPS)
 plt.show(block=True)
-
