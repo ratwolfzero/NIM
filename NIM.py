@@ -54,6 +54,12 @@ class NimGame:
             table_data.append([
                 f"Heap {i+1}", h, binary_heaps[i], "⊕", binary_nim_val, "=", binary_new_h, new_h, safe_move_possible
             ])
+        
+        # Add the Nim-sum row at the bottom
+        table_data.append([
+            "Nim-Sum *", nim_val, binary_nim_val, "", "", "", "", "", ""
+        ])
+        
         return table_data
 
     def draw_heap_circles(self):
@@ -70,22 +76,14 @@ class NimGame:
         table_data = self.generate_table_data(nim_val, binary_heaps, binary_nim_val)
         column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]
 
-        # Display XOR equation above the table
-        self.ax_info.text(0.5, 1.05, f"Nim-Sum: Bitwise XOR of All Heap Sizes: {xor_equation}",
-                          fontsize=12, ha="center", weight="normal", family="monospace")
-
-        # Display Nim-Sum below XOR equation
-        self.ax_info.text(0.5, 1.0, f"Nim-Sum: {nim_val} (Binary: {binary_nim_val})",
-                          fontsize=12, ha="center", weight="bold")
-
         # Create and format table
-        table = self.ax_info.table(cellText=table_data, colLabels=column_labels, cellLoc="center", loc="center", bbox=[0, 0.4, 1, 0.5])
+        table = self.ax_info.table(cellText=table_data, colLabels=column_labels, cellLoc="center", loc="center", bbox=[0, 0.5, 1, 0.5])
         table.auto_set_font_size(False)
         table.set_fontsize(10)
 
         # Adjust column widths
         col_widths = [0.1, 0.1, 0.15, 0.05, 0.15, 0.05, 0.15, 0.1, 0.15]
-        for i, width in enumerate(col_widths):
+        for i, width in enumerate(col_widths):                            
             table.auto_set_column_width(i)
             table.get_celld()[(0, i)].set_width(width)
 
@@ -94,11 +92,23 @@ class NimGame:
             if row == 0:  # Header row
                 cell.get_text().set_weight("bold")
 
-        # Change cell colors for "Safe Move?"
-        for (row, col), cell in table.get_celld().items():
-            if col == 8 and row > 0:
-                cell.set_facecolor(SAFE_COLOR if table_data[row-1][col] == "YES" else UNSAFE_COLOR)
-                cell.get_text().set_weight("bold")
+        # Change cell colors for "Safe Move?" (only for heap rows)
+        for row in range(1, len(table_data)):  # Iterate over all rows except the Nim-sum row
+            if row < len(table_data):  # Ensure we don't go out of bounds
+                cell = table.get_celld()[(row, 8)]
+                cell.set_facecolor(SAFE_COLOR if table_data[row-1][8] == "YES" else UNSAFE_COLOR)
+                cell.get_text().set_weight("normal")  # Ensure heap rows are not bold
+
+        # Make the Nim-sum row bold
+        for col in range(len(column_labels)):
+            cell = table.get_celld()[(len(table_data), col)]
+            cell.get_text().set_weight("bold")
+            #cell = table.get_celld()[(row+1, 0)]
+            #cell.set_facecolor(UNSAFE_COLOR if table_data[row][1] != 0 else SAFE_COLOR)
+
+        # Display XOR equation below the table
+        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR of All Heap Sizes: {xor_equation}",
+                          fontsize=10, ha="center", weight="normal", family="monospace")
 
     def plot_nim(self):
         """Update the entire UI."""
@@ -106,7 +116,7 @@ class NimGame:
         nim_val, binary_heaps, binary_nim_val, xor_equation = self.nim_sum_with_binary()
         
         # Update title in Figure 1 (heap visualization)
-        self.ax.set_title(f"Nim-Sum: {nim_val} ({binary_nim_val}) ({'Safe' if nim_val == 0 else 'Unsafe'})",
+        self.ax.set_title(f"Nim-Sum = {nim_val} ({binary_nim_val}) ({'Safe' if nim_val == 0 else 'Unsafe'})",
                           fontsize=14, color=SAFE_COLOR if nim_val == 0 else UNSAFE_COLOR)
         
         self.draw_heap_circles()
@@ -117,7 +127,7 @@ class NimGame:
     def create_sliders(self):
         """Create sliders for heap size adjustment."""
         for i in range(len(self.heaps)):
-            ax_slider = plt.axes([0.2, 0.02 + (len(self.heaps) - i - 1) * 0.07, 0.6, 0.03])
+            ax_slider = plt.axes([0.2, 0.08 + (len(self.heaps) - i - 1) * 0.07, 0.6, 0.03])
             slider = Slider(ax_slider, f"Heap {i+1}", 0, MAX_HEAP_SIZE, valinit=self.heaps[i], valstep=1)
             slider.on_changed(self.update)
             self.sliders.append(slider)
@@ -130,3 +140,4 @@ class NimGame:
 # Initialize and run the Nim game
 nim_game = NimGame(INITIAL_HEAPS)
 plt.show(block=True)
+
