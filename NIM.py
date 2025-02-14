@@ -33,12 +33,27 @@ COLUMN_WIDTHS = [0.1, 0.1, 0.15, 0.05, 0.15, 0.05, 0.15, 0.1, 0.15]  # Column wi
 class NimGame:
     def __init__(self, heaps):
         self.heaps = heaps
+        self.nim_val = 0
+        self.binary_heaps = []
+        self.binary_nim_val = ""
+        self.xor_equation = ""
+
         self.fig, self.ax = plt.subplots(figsize=FIG_SIZE_HEAP)
         self.fig_info, self.ax_info = plt.subplots(figsize=FIG_SIZE_TABLE)
         self.fig.canvas.manager.set_window_title("Heap Visualization")
         self.fig_info.canvas.manager.set_window_title("Mathematical Insights")
         self.sliders = []
+        
+        self.compute_nim_sum()  # Calculate Nim-sum once initially
         self.setup_ui()
+
+    def compute_nim_sum(self):
+        """Compute the nim-sum and store it to avoid redundant calculations."""
+        max_bits = max(NIM_SUM_MIN_BITS, max(self.heaps).bit_length())
+        self.binary_heaps = [bin(h)[2:].zfill(max_bits) for h in self.heaps]
+        self.nim_val = np.bitwise_xor.reduce(self.heaps)
+        self.binary_nim_val = bin(self.nim_val)[2:].zfill(max_bits)
+        self.xor_equation = " ⊕ ".join(self.binary_heaps) + f" = {self.binary_nim_val}"
 
     def setup_ui(self):
         """Set up the UI, including sliders and initial plot."""
@@ -46,15 +61,6 @@ class NimGame:
         self.ax_info.axis("off")
         self.plot_nim()
         self.create_sliders()
-
-    def nim_sum_with_binary(self):
-        """Compute the nim-sum and return its binary representation."""
-        max_bits = max(NIM_SUM_MIN_BITS, max(self.heaps).bit_length())
-        binary_heaps = [bin(h)[2:].zfill(max_bits) for h in self.heaps]
-        nim_val = np.bitwise_xor.reduce(self.heaps)
-        binary_nim_val = bin(nim_val)[2:].zfill(max_bits)
-        xor_equation = " ⊕ ".join(binary_heaps) + f" = {binary_nim_val}"
-        return nim_val, binary_heaps, binary_nim_val, xor_equation
 
     def setup_axes(self):
         """Set up axes properties for the heap plot."""
@@ -67,19 +73,19 @@ class NimGame:
         self.ax.set_facecolor('#F5F5F5')
         self.ax.set_aspect('auto')
 
-    def generate_table_data(self, nim_val, binary_heaps, binary_nim_val):
-        """Generate data for the table."""
-        xor_results = [h ^ nim_val for h in self.heaps]
+    def generate_table_data(self):
+        """Generate data for the table using stored Nim-sum values."""
+        xor_results = [h ^ self.nim_val for h in self.heaps]
 
         table_data = [
             [
                 f"Heap {i+1}",
                 h,
-                binary_heaps[i],
+                self.binary_heaps[i],
                 "⊕",
-                binary_nim_val,
+                self.binary_nim_val,
                 "=",
-                bin(xor_results[i])[2:].zfill(len(binary_nim_val)),
+                bin(xor_results[i])[2:].zfill(len(self.binary_nim_val)),
                 xor_results[i],
                 "YES" if xor_results[i] < h else "NO"
             ]
@@ -88,7 +94,7 @@ class NimGame:
     
         # Add the Nim-sum row at the bottom
         table_data.append([
-            "Nim-Sum *", nim_val, binary_nim_val, "", "", "", "", "", ""
+            "Nim-Sum *", self.nim_val, self.binary_nim_val, "", "", "", "", "", ""
         ])
     
         return table_data
@@ -99,12 +105,12 @@ class NimGame:
             for j in range(h):
                 self.ax.add_patch(plt.Circle((i * HEAP_SPACING, j), CIRCLE_RADIUS, color=DEFAULT_COLOR))
 
-    def update_table(self, nim_val, binary_heaps, binary_nim_val, xor_equation):
-        """Update the table with new data."""
+    def update_table(self):
+        """Update the table using stored Nim-sum values."""
         self.ax_info.clear()
         self.ax_info.axis("off")
 
-        table_data = self.generate_table_data(nim_val, binary_heaps, binary_nim_val)
+        table_data = self.generate_table_data()
         column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]
 
         # Create and format table
@@ -133,7 +139,7 @@ class NimGame:
             cell.get_text().set_weight("bold")
 
         # Display XOR equation below the table
-        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR of All Heap Sizes: {xor_equation}",
+        self.ax_info.text(0.5, 0.44, f"*Nim-Sum = Bitwise XOR of All Heap Sizes: {self.xor_equation}",
                           fontsize=10, ha="center", weight="normal", family="monospace")
 
         # Explanation of XOR (⊕) symbol
@@ -142,15 +148,14 @@ class NimGame:
                           fontsize=9, ha="center", weight="normal", family="monospace")
 
     def plot_nim(self):
-        """Update the entire UI."""
+        """Update the entire UI without redundant Nim-sum calculations."""
+        self.compute_nim_sum()  # Recalculate only when needed
         self.setup_axes()
-        nim_val, binary_heaps, binary_nim_val, xor_equation = self.nim_sum_with_binary()
+        self.ax.set_title(f"Nim-Sum = {self.nim_val} ({self.binary_nim_val}) ({'Safe' if self.nim_val == 0 else 'Unsafe'})",
+                          fontsize=14, color=SAFE_COLOR if self.nim_val == 0 else UNSAFE_COLOR)
 
-        self.ax.set_title(f"Nim-Sum = {nim_val} ({binary_nim_val}) ({'Safe' if nim_val == 0 else 'Unsafe'})",
-                          fontsize=14, color=SAFE_COLOR if nim_val == 0 else UNSAFE_COLOR)
-        
         self.draw_heap_circles()
-        self.update_table(nim_val, binary_heaps, binary_nim_val, xor_equation)
+        self.update_table()
         self.fig.canvas.draw_idle()
         self.fig_info.canvas.draw_idle()
 
