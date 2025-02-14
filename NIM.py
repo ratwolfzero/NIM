@@ -7,7 +7,7 @@ SAFE_COLOR = "#008811"  # Green for safe positions
 UNSAFE_COLOR = "#D05533"  # Red for unsafe positions
 DEFAULT_COLOR = "#4169E1"  # Blue for heaps
 INITIAL_HEAPS = [1, 3, 5, 7]  # Initial heap sizes
-MAX_HEAP_SIZE = 10  # Maximum heap size for sliders
+MAX_HEAP_SIZE = 100  # Maximum heap size for sliders
 
 class NimGame:
     def __init__(self, heaps):
@@ -46,26 +46,31 @@ class NimGame:
 
     def generate_table_data(self, nim_val, binary_heaps, binary_nim_val):
         """Generate data for the table."""
+        xor_results = [h ^ nim_val for h in self.heaps]  # Precompute all XOR values
+    
         table_data = [
-            [
-                f"Heap {i+1}", 
-                h, 
-                binary_heaps[i], 
-                "⊕", 
-                binary_nim_val, 
-                "=", 
-                bin(h ^ nim_val)[2:].zfill(len(binary_nim_val)), 
-                h ^ nim_val, 
-                "YES" if (h ^ nim_val) < h else "NO"
-            ] for i, h in enumerate(self.heaps)
+        [
+            f"Heap {i+1}",
+            h,
+            binary_heaps[i],
+            "⊕",
+            binary_nim_val,
+            "=",
+            bin(xor_results[i])[2:].zfill(len(binary_nim_val)),
+            xor_results[i],
+            "YES" if xor_results[i] < h else "NO"
         ]
-        
-        # Add the Nim-sum row at the bottom
+        for i, h in enumerate(self.heaps)
+    ]
+    
+    # Add the Nim-sum row at the bottom
         table_data.append([
-            "Nim-Sum *", nim_val, binary_nim_val, "", "", "", "", "", ""
-        ])
-        
+        "Nim-Sum *", nim_val, binary_nim_val, "", "", "", "", "", ""
+    ])
+    
         return table_data
+
+
 
     def draw_heap_circles(self):
         """Draw circles representing the heaps."""
