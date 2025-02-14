@@ -8,7 +8,7 @@ UNSAFE_COLOR = "#D05533"  # Red for unsafe positions
 DEFAULT_COLOR = "#4169E1"  # Blue for heaps
 
 INITIAL_HEAPS = [1, 3, 5, 7]  # Initial heap sizes
-MAX_HEAP_SIZE = 10  # Maximum heap size for sliders
+MAX_HEAP_SIZE = max(INITIAL_HEAPS)  # Maximum heap size for sliders
 
 # UI Layout Constants
 FIG_SIZE_HEAP = (8, 8)  # Figure size for heap visualization
@@ -23,7 +23,7 @@ SLIDER_WIDTH = 0.6
 SLIDER_HEIGHT = 0.03
 SLIDER_START_X = 0.2
 SLIDER_START_Y = 0.08
-SLIDER_SPACING = 0.07  # Vertical space between sliders
+SLIDER_SPACING = 0.05  # Vertical space between sliders
 
 # Table Layout Constants
 TABLE_BBOX = [0, 0.5, 1, 0.5]  # Position of the table
