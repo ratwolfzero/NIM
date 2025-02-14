@@ -35,6 +35,8 @@ class NimGame:
         self.heaps = heaps
         self.fig, self.ax = plt.subplots(figsize=FIG_SIZE_HEAP)
         self.fig_info, self.ax_info = plt.subplots(figsize=FIG_SIZE_TABLE)
+        self.fig.canvas.manager.set_window_title("Heap Visualization")
+        self.fig_info.canvas.manager.set_window_title("Mathematical Insights")
         self.sliders = []
         self.setup_ui()
 
