@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
 # Constants
-SAFE_COLOR = "#7BAF7B"  # green for safe positions
-UNSAFE_COLOR = "#F19C9C"  # red for unsafe positions
-DEFAULT_COLOR = "#4169E1"  # Blue for heaps
+SAFE_COLOR = "seagreen"  # Green for safe positions
+UNSAFE_COLOR = "tomato"  # Red for unsafe positions
+DEFAULT_COLOR = "royalblue"  # Blue for heaps
 
 INITIAL_HEAPS = [1, 3, 5, 7]  # Initial heap sizes
 MAX_HEAP_SIZE = max(INITIAL_HEAPS)  # Maximum heap size for sliders
@@ -138,7 +138,7 @@ class NimGame:
         # Change cell color and weight for "Dec'" column based on "Safe Move?"
         for row in range(1, len(table_data)):  
             safe_move = table_data[row-1][8] == "YES"
-            color = "green" if safe_move else "red"
+            color = SAFE_COLOR if safe_move else UNSAFE_COLOR
             cell = table.get_celld()[(row, 7)]
             cell.get_text().set_weight("bold")
             cell.get_text().set_color(color)
