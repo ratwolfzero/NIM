@@ -135,6 +135,14 @@ class NimGame:
             cell = table.get_celld()[(row, 8)]
             cell.set_facecolor(SAFE_COLOR if table_data[row-1][8] == "YES" else UNSAFE_COLOR)
 
+            # Change cell color and weight for "Dec'" column based on "Safe Move?"
+        for row in range(1, len(table_data)):  
+            safe_move = table_data[row-1][8] == "YES"
+            color = SAFE_COLOR if safe_move else UNSAFE_COLOR
+            cell = table.get_celld()[(row, 7)]
+            cell.get_text().set_weight("bold")
+            cell.get_text().set_color(color)
+
         # Make the Nim-sum row bold
         for col in range(len(column_labels)):
             cell = table.get_celld()[(len(table_data), col)]
