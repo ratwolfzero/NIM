@@ -7,7 +7,7 @@ SAFE_COLOR = "#008811"  # Green for safe positions
 UNSAFE_COLOR = "#D05533"  # Red for unsafe positions
 DEFAULT_COLOR = "#4169E1"  # Blue for heaps
 INITIAL_HEAPS = [1, 3, 5, 7]  # Initial heap sizes
-MAX_HEAP_SIZE = 100  # Maximum heap size for sliders
+MAX_HEAP_SIZE = 10  # Maximum heap size for sliders
 
 class NimGame:
     def __init__(self, heaps):
