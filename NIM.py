@@ -37,6 +37,7 @@ class NimGame:
         self.binary_heaps = []
         self.binary_nim_val = ""
         self.xor_equation = ""
+        self.heaps_changed = True  # Flag to track if heaps have changed
 
         self.fig, self.ax = plt.subplots(figsize=FIG_SIZE_HEAP)
         self.fig_info, self.ax_info = plt.subplots(figsize=FIG_SIZE_TABLE)
@@ -44,16 +45,17 @@ class NimGame:
         self.fig_info.canvas.manager.set_window_title("Mathematical Insights")
         self.sliders = []
         
-        self.compute_nim_sum()  # Calculate Nim-sum once initially
         self.setup_ui()
 
     def compute_nim_sum(self):
         """Compute the nim-sum and store it to avoid redundant calculations."""
-        max_bits = max(NIM_SUM_MIN_BITS, max(self.heaps).bit_length())
-        self.binary_heaps = [bin(h)[2:].zfill(max_bits) for h in self.heaps]
-        self.nim_val = np.bitwise_xor.reduce(self.heaps)
-        self.binary_nim_val = bin(self.nim_val)[2:].zfill(max_bits)
-        self.xor_equation = " ⊕ ".join(self.binary_heaps) + f" = {self.binary_nim_val}"
+        if self.heaps_changed:
+            max_bits = max(NIM_SUM_MIN_BITS, max(self.heaps).bit_length())
+            self.binary_heaps = [bin(h)[2:].zfill(max_bits) for h in self.heaps]
+            self.nim_val = np.bitwise_xor.reduce(self.heaps)
+            self.binary_nim_val = bin(self.nim_val)[2:].zfill(max_bits)
+            self.xor_equation = " ⊕ ".join(self.binary_heaps) + f" = {self.binary_nim_val}"
+            self.heaps_changed = False
 
     def setup_ui(self):
         """Set up the UI, including sliders and initial plot."""
@@ -170,6 +172,7 @@ class NimGame:
     def update(self, val):
         """Callback for slider updates."""
         self.heaps = [int(slider.val) for slider in self.sliders]
+        self.heaps_changed = True  # Set flag to indicate heaps have changed
         self.plot_nim()
 
 # Initialize and run the Nim game
