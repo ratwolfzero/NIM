@@ -166,5 +166,6 @@ class NimGame:
         self.plot_nim()
 
 # Initialize and run the Nim game
-nim_game = NimGame(INITIAL_HEAPS)
-plt.show(block=True)
+if __name__ == "__main__":
+    nim_game = NimGame(INITIAL_HEAPS)
+    plt.show(block=True)
