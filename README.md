@@ -55,17 +55,17 @@ Thus, the Nim-sum is `0000` (0 in decimal).
 
 ## Winning Strategy for Nim
 
-### Key Concepts
+## Key Concepts
 
-#### Unsafe Positions (Nim-sum ≠ 0)
+### **Unsafe Game States (Nim-sum ≠ 0)**  
 
-A position where the **Nim-sum is not zero** is called an **unsafe position**.  
-If it is your turn and you **play optimally**, you can always make a move that forces your opponent into a losing position.
+A position where the **Nim-sum is not zero** is called an **unsafe game state**.  
+If it is your turn and you **play optimally**, you can always make a move that forces your opponent into a losing position.  
 
-#### Safe Positions (Nim-sum = 0)
+### **Safe Game States (Nim-sum = 0)**  
 
-A position where the **Nim-sum is zero** is called a **safe position**.  
-If you are in a safe position, **any move you make will leave the Nim-sum nonzero**, giving your opponent a chance to win if they play optimally.
+A position where the **Nim-sum is zero** is called a **safe game state**.  
+If you are in a safe state, **any move you make will leave the Nim-sum nonzero**, giving your opponent a chance to win if they play optimally.  
 
 ---
 
