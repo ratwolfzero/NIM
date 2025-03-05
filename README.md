@@ -100,7 +100,7 @@ h_i' = h_i \oplus \text{Nim-sum} \text{ with }  h_i' < h_i
 \large
 $$
 
-This guarantees that the **new Nim-sum becomes 0**, putting your opponent in a losing position.
+guarantees that the **new Nim-sum becomes 0**, putting your opponent in a losing position.
 
 ---
 
