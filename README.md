@@ -19,7 +19,7 @@ The Game of Nim has ancient roots, but its mathematical foundations were establi
 
 ---
 
-Understanding the Nim-Sum: Binary XOR (⊕ - Circle Plus Symbol)
+## Understanding the Nim-Sum: Binary XOR (⊕ - Circle Plus Symbol)
 
 The key to winning Nim lies in understanding the **Nim-sum**, calculated using the **bitwise XOR operation** (`^` or "XOR").
 
