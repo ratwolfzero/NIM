@@ -65,7 +65,7 @@ If it is your turn and you **play optimally**, you can always make a move that f
 ### **Safe Game States (Nim-sum = 0)**  
 
 A position where the **Nim-sum is zero** is called a **safe game state**.  
-If you are in a safe state, **any move you make will leave the Nim-sum nonzero**, giving your opponent a chance to win if they play optimally.  
+If you are in a safe game state, **any move you make will leave the Nim-sum nonzero**, giving your opponent a chance to win if they play optimally.  
 
 ---
 
@@ -84,13 +84,13 @@ $$
 
 #### **Step 2: Determine Your Position**
 
-- **If the Nim-sum is 0** → You are in a **safe position** (which means a losing position if your opponent plays optimally).  
+- **If the Nim-sum is 0** → You are in a **safe game state** (which means a losing position if your opponent plays optimally).  
   Any move you make will give your opponent a winning strategy.  
 
-- **If the Nim-sum is not 0** → You are in an **unsafe position** (which means a winning position if you play optimally).  
-  You should move to a **safe position** by following Step 3.
+- **If the Nim-sum is not 0** → You are in an **unsafe game state** (which means a winning position if you play optimally).  
+  You should move to a **safe game state** by following Step 3.
 
-#### **Step 3: Move to a Safe Position**
+#### **Step 3: Move to a Safe Game State**
 
 Find a heap $$\large h_i \large$$ where reducing it to:
 
@@ -106,4 +106,4 @@ guarantees that the **new Nim-sum becomes 0**, putting your opponent in a losing
 
 ### **Why This Works**
 
-By ensuring the new Nim-sum is zero, you force your opponent into a position where they **cannot** make a move that results in a Nim-sum of zero again.  
+By ensuring the new Nim-sum is zero, you force your opponent into a position where they **cannot** make a move that results in a Nim-sum of zero again.
