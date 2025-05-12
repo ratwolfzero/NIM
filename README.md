@@ -1,4 +1,4 @@
-# The Game of Nim: A Tutorial
+# The Secret of NIM
 
 The Game of Nim is a mathematical strategy game where two players take turns removing objects from heaps or piles. The goal is to be the player who takes the last object. Although it may appear complex at first, Nim has a simple yet beautiful winning strategy based on binary arithmetic and the concept of the "Nim-sum."
 
