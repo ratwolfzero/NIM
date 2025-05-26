@@ -4,7 +4,7 @@ The Game of Nim is a mathematical strategy game where two players take turns rem
 
 ## Historical Context
 
-The Game of Nim has ancient roots, but its mathematical foundations were established in 1901 by Charles L. Bouton, who introduced the Nim-sum and a complete winning strategy. Nim became a cornerstone of combinatorial game theory and even inspired early computer implementations, such as the 1951 Nimrod computer. Today, it remains a classic example of strategic thinking and binary arithmetic.
+The game of Nim has ancient roots, but its mathematical foundations were laid in 1901 by Charles L. Bouton, who developed a complete mathematical theory of Nim based on binary addition modulo 2 — an operation equivalent to the bitwise XOR of heap sizes, now commonly called the Nim-sum. Nim became a cornerstone of combinatorial game theory and even inspired early computer implementations, such as the 1951 Nimrod computer. Today, it remains a classic example of strategic thinking and binary arithmetic.
 
 ![Nim](Nim_1.png)
 ![Nim](Nim_2.png)
