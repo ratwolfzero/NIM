@@ -106,7 +106,8 @@ guarantees that the **new Nim-sum becomes 0**, putting your opponent in a losing
 
 ### **Why This Works**
 
-By ensuring the new Nim-sum is zero, you force your opponent into a position where they **cannot** make a move that results in a Nim-sum of zero again.
+By ensuring the new Nim-sum is zero, you force your opponent into a position where they **cannot** make a move that results in a Nim-sum of zero again.  
+
 In mathematical terms, each heap in Nim has a Grundy number equal to its size — a value that allows us to generalize Nim’s logic to many other games.
 
 ## Beyond Nim: How Grundy Numbers (Nimbers) Solve Impartial Games
