@@ -107,3 +107,9 @@ guarantees that the **new Nim-sum becomes 0**, putting your opponent in a losing
 ### **Why This Works**
 
 By ensuring the new Nim-sum is zero, you force your opponent into a position where they **cannot** make a move that results in a Nim-sum of zero again.
+
+## Beyond Nim: How Grundy Numbers (Nimbers) Solve Impartial Games
+
+While Nim itself is a classic and elegant game, the concept of Grundy numbers (also known as nimbers) extends far beyond it. These numbers provide a universal way to analyze and solve a wide range of impartial games—games where the available moves depend only on the state of the game, not on whose turn it is. By translating complex game positions into equivalent Nim heaps using Grundy numbers, we unlock a powerful and general winning strategy.
+
+The winning strategy in Nim is based on these Grundy numbers. In Nim, the Grundy number for a heap is simply its size. In other impartial games, a position's Grundy number is found by taking the Mex (Minimum Excluded value) of the set of Grundy numbers of all possible next moves. This means it's the smallest non-negative integer not present in that set. This method allows us to reduce complex impartial games to Nim and apply the same winning strategy.
