@@ -35,13 +35,15 @@ class NimGame:
         self.fig, self.ax = plt.subplots(figsize=FIG_SIZE_HEAP)
         self.fig_info, self.ax_info = plt.subplots(figsize=FIG_SIZE_TABLE)
         self.fig.canvas.manager.set_window_title("🔵 Heap Visualization 🔵")
-        self.fig_info.canvas.manager.set_window_title("🧮 Mathematical Insights 🧮")
+        self.fig_info.canvas.manager.set_window_title(
+            "🧮 Mathematical Insights 🧮")
         self.sliders = []
 
         self.setup_ui()
 
     def compute_state(self):
-        max_bits = max(NIM_SUM_MIN_BITS, max(self.heaps, default=0).bit_length())
+        max_bits = max(NIM_SUM_MIN_BITS, max(
+            self.heaps, default=0).bit_length())
         binary_heaps = [format(heap, f"0{max_bits}b") for heap in self.heaps]
         nim_value = 0
         for heap in self.heaps:
@@ -67,8 +69,10 @@ class NimGame:
         self.ax.clear()
         self.ax.set_xlim(-1, len(self.heaps) * HEAP_SPACING)
         self.ax.set_ylim(-0.5, MAX_HEAP_SIZE)
-        self.ax.set_xticks(range(0, len(self.heaps) * HEAP_SPACING, HEAP_SPACING))
-        self.ax.set_xticklabels([f"Heap {i + 1}" for i in range(len(self.heaps))])
+        self.ax.set_xticks(
+            range(0, len(self.heaps) * HEAP_SPACING, HEAP_SPACING))
+        self.ax.set_xticklabels(
+            [f"Heap {i + 1}" for i in range(len(self.heaps))])
         self.ax.set_yticks([])
         self.ax.set_facecolor("#F5F5F5")
         self.ax.set_aspect("auto")
@@ -94,21 +98,24 @@ class NimGame:
             )
 
         table_data.append(
-            ["Nim-Sum *", self.state["nim_value"], self.state["binary_nim_value"], "", "", "", "", "", ""]
+            ["Nim-Sum *", self.state["nim_value"],
+                self.state["binary_nim_value"], "", "", "", "", "", ""]
         )
         return table_data
 
     def draw_heap_circles(self):
         for index, heap in enumerate(self.heaps):
             for level in range(heap):
-                self.ax.add_patch(plt.Circle((index * HEAP_SPACING, level), CIRCLE_RADIUS, color=DEFAULT_COLOR))
+                self.ax.add_patch(plt.Circle(
+                    (index * HEAP_SPACING, level), CIRCLE_RADIUS, color=DEFAULT_COLOR))
 
     def update_table(self):
         self.ax_info.clear()
         self.ax_info.axis("off")
 
         table_data = self.generate_table_data()
-        column_labels = ["Heap#", "Dec", "Bin", "", "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]
+        column_labels = ["Heap#", "Dec", "Bin", "",
+                         "Nim-Sum", "", "Bin'", "Dec'", "Safe Move?"]
 
         table = self.ax_info.table(
             cellText=table_data,
@@ -130,7 +137,8 @@ class NimGame:
 
         for row in range(1, len(table_data)):
             safe_move = table_data[row - 1][8] == "YES"
-            table.get_celld()[(row, 8)].set_facecolor(SAFE_COLOR if safe_move else UNSAFE_COLOR)
+            table.get_celld()[(row, 8)].set_facecolor(
+                SAFE_COLOR if safe_move else UNSAFE_COLOR)
 
             dec_cell = table.get_celld()[(row, 7)]
             dec_cell.get_text().set_weight("bold")
@@ -175,8 +183,10 @@ class NimGame:
 
     def create_sliders(self):
         for index, heap in enumerate(self.heaps):
-            axes = plt.axes([SLIDER_START_X, SLIDER_START_Y + (len(self.heaps) - index - 1) * SLIDER_SPACING, SLIDER_WIDTH, SLIDER_HEIGHT])
-            slider = Slider(axes, f"Heap {index + 1}", 0, MAX_HEAP_SIZE, valinit=heap, valstep=1)
+            axes = plt.axes([SLIDER_START_X, SLIDER_START_Y + (len(self.heaps) -
+                            index - 1) * SLIDER_SPACING, SLIDER_WIDTH, SLIDER_HEIGHT])
+            slider = Slider(axes, f"Heap {index + 1}",
+                            0, MAX_HEAP_SIZE, valinit=heap, valstep=1)
             slider.on_changed(self.update)
             self.sliders.append(slider)
 
